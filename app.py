@@ -20,7 +20,7 @@ if st.button("🔍 Find Matching Jobs"):
         st.error("Please enter job descriptions")
 
     else:
-        st.success("Analyzing...")
+        st.success("Analyzed")
 
         resume_text = read_resume(uploaded_file)
         job_list = [j.strip() for j in job_input.split("---") if j.strip()]
