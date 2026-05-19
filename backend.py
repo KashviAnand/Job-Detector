@@ -33,7 +33,7 @@ def detect_role(text):
     elif any(word in text for word in ["python", "ai ml", "scikit learn"]):
          return "AI ML engineer"
 
-    elif any(word in text for word in ["python", "Probability", "Excel","Libraries"]):
+    elif any(word in text for word in ["python", "Probability", "Excel",""]):
          return "Data Science"
 
     else:

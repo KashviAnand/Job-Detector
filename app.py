@@ -8,6 +8,7 @@ st.title("🤖 Job Profile Chatbot")
 st.write("Upload your resume and paste job descriptions to find best matches.")
 
 # -------------------- UI --------------------
+
 uploaded_file = st.file_uploader("📄 Upload Resume", type=["pdf", "txt"])
 job_input = st.text_area("💼 Paste Job Descriptions (separate using ---)")
 

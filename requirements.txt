@@ -1,5 +1,2 @@
+pypdf
 streamlit
-scikit-learn
-pandas
-numpy
-PyPDF2
