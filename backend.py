@@ -280,5 +280,13 @@ if __name__ == "__main__":
         print(f"{job} --> {score:.2f}")
 
     print("\nPredicted Roles:")
+
+    def detect_role(text):
+    result = predict_role(text)
+
+    if isinstance(result, list):
+        return result[0][0]
+
+    return result
     print(predict_role(resume_text))
 ```
