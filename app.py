@@ -1,5 +1,5 @@
 import streamlit as st
-from backend import read_resume, match_jobs, predict_role
+from backend import read_resume, match_jobs, detect_role
 
 # ---------------- PAGE CONFIG ---------------- #
 
@@ -15,7 +15,7 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-/* Hide Streamlit default menu */
+/* Hide Streamlit Menu */
 #MainMenu {visibility:hidden;}
 footer {visibility:hidden;}
 header {visibility:hidden;}
@@ -32,8 +32,7 @@ max-width:900px;
 padding-top:40px;
 }
 
-
-/* Upload */
+/* Upload Box */
 [data-testid="stFileUploader"]{
 background:rgba(255,255,255,.05);
 padding:15px;
@@ -41,7 +40,7 @@ border-radius:12px;
 border:1px solid rgba(255,255,255,.1);
 }
 
-/* TextArea */
+/* Text Area */
 textarea{
 background:rgba(255,255,255,.05)!important;
 color:white!important;
@@ -65,7 +64,7 @@ background:#ff2e55;
 color:white;
 }
 
-/* Results */
+/* Result Card */
 .result-card{
 background:rgba(255,255,255,.08);
 padding:20px;
@@ -82,31 +81,27 @@ border-left:5px solid #ff2e55;
 
 st.markdown("""
 <h1 style='font-size:60px;color:white;margin-bottom:5px;'>
-🤖 Job Profile<br>Chatbot
+🤖 Job Profile Chatbot
 </h1>
 
 <p style='font-size:18px;color:white;opacity:.8;'>
-Upload your resume and paste job description to find the best matching jobs.
+Upload your resume and paste job descriptions to find the best matching jobs.
 </p>
 """, unsafe_allow_html=True)
 
-# ---------------- FORM CARD ---------------- #
-
-st.markdown("<div class='glass'>", unsafe_allow_html=True)
+# ---------------- INPUTS ---------------- #
 
 uploaded_file = st.file_uploader(
-    "Upload Your Resume Here",
-    type=["pdf", "txt"]
+    "📄 Upload Resume",
+    type=["pdf"]
 )
 
 job_input = st.text_area(
-    "Paste Job Description to get required answers: (Separate each JD using ---)",
+    "📋 Paste Job Description(s) (Separate multiple JDs using ---)",
     height=220
 )
 
-analyze = st.button("Find Matching Jobs For You")
-
-st.markdown("</div>", unsafe_allow_html=True)
+analyze = st.button("🚀 Find Matching Jobs")
 
 # ---------------- ANALYSIS ---------------- #
 
@@ -116,11 +111,11 @@ if analyze:
         st.error("⚠ Please upload your resume.")
 
     elif not job_input.strip():
-        st.error("⚠ Please paste job descriptions.")
+        st.error("⚠ Please paste at least one Job Description.")
 
     else:
 
-        with st.spinner("Analyzing Resume..."):
+        with st.spinner("🔍 Analyzing Resume..."):
 
             resume_text = read_resume(uploaded_file)
 
@@ -133,8 +128,6 @@ if analyze:
             results = match_jobs(resume_text, job_list)
 
         st.success("✅ Analysis Completed Successfully")
-
-        st.markdown("<br>", unsafe_allow_html=True)
 
         st.markdown(
             "<h2 style='color:white;'>🎯 Top Job Matches</h2>",
@@ -153,22 +146,18 @@ if analyze:
             </h3>
 
             <h2 style='color:#00ff99;'>
-            {round(score*100,2)}% Match
+            {round(score * 100, 2)}% Match
             </h2>
 
             <h4 style='color:#FFD700;'>
-            🎯 Predicted Role : {role}
+            🎯 Predicted Role: {role}
             </h4>
 
             <p style='color:white;line-height:1.6;'>
-
-            {job[:350]}...
-
+            {job[:400]}
             </p>
 
             </div>
-            """,
-            unsafe_allow_html=True
-            )
+            """, unsafe_allow_html=True)
 
         st.balloons()
