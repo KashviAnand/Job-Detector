@@ -1,5 +1,5 @@
 import streamlit as st
-from backend import read_resume, match_jobs, detect_role
+from backend import read_resume, match_jobs, predict_role
 
 # ---------------- PAGE CONFIG ---------------- #
 
